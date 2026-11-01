@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML Elements Reference</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#f5f6fa;--surface:#fff;--text:#161c2d;--muted:#606a82;--border:#e5e8f0;
+    --accent:#e34c26;--accent-2:#f06529;--accent-soft:#fdeee8;
+    --code-bg:#141a2b;--code-text:#dde3f2;
+    --sidebar-bg:#0f1526;--sidebar-text:#9aa4bf;
+    --radius:16px;
+    --shadow:0 1px 2px rgba(15,21,38,.04),0 10px 30px rgba(15,21,38,.06);
+    --mono:'SF Mono',ui-monospace,'JetBrains Mono','Fira Code',Consolas,monospace;
+  }
+  ::selection{background:rgba(227,76,38,.22)}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;-webkit-font-smoothing:antialiased}
+
+  /* ---------- Sidebar ---------- */
+  .sidebar{position:fixed;inset:0 auto 0 0;width:296px;height:100vh;overflow-y:auto;background:var(--sidebar-bg);color:var(--sidebar-text);padding:26px 16px 60px;z-index:50;scrollbar-width:thin;scrollbar-color:#2a3350 transparent}
+  .sidebar::-webkit-scrollbar{width:8px}
+  .sidebar::-webkit-scrollbar-thumb{background:#2a3350;border-radius:4px}
+  .brand{display:flex;align-items:center;gap:12px;padding:4px 10px 24px;color:#fff}
+  .brand .logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;font-weight:800;font-size:15px;color:#fff;box-shadow:0 6px 16px rgba(227,76,38,.4);flex-shrink:0}
+  .brand h1{font-size:16px;font-weight:700;letter-spacing:-.01em;line-height:1.2}
+  .brand span{display:block;font-size:10.5px;color:#6b7699;font-weight:500;letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+  .nav-group{margin-bottom:22px}
+  .nav-group>h4{font-size:10.5px;text-transform:uppercase;letter-spacing:.14em;color:#5c6785;font-weight:700;padding:0 12px;margin-bottom:8px}
+  .nav-group a{display:block;padding:6px 12px;border-radius:8px;color:var(--sidebar-text);text-decoration:none;font-size:13.5px;transition:.15s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .nav-group a:hover{background:rgba(255,255,255,.06);color:#fff}
+  .nav-group a.active{background:linear-gradient(90deg,rgba(227,76,38,.22),rgba(227,76,38,.02));color:#fff;box-shadow:inset 3px 0 0 var(--accent)}
+
+  /* ---------- Main ---------- */
+  main{margin-left:296px;max-width:1040px;padding:56px 56px 120px}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:20px 0 44px;border-bottom:1px solid var(--border);margin-bottom:44px}
+  .eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:5px 12px;border-radius:999px;margin-bottom:18px}
+  .hero h1{font-size:clamp(32px,4.5vw,48px);line-height:1.1;letter-spacing:-.025em;font-weight:800}
+  .hero h1 .grad{background:linear-gradient(120deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:var(--muted);font-size:17px;max-width:660px;margin-top:16px}
+  .stats{display:flex;gap:32px;margin-top:26px;flex-wrap:wrap}
+  .stat strong{display:block;font-size:24px;font-weight:800;color:var(--text);letter-spacing:-.02em}
+  .stat span{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;font-weight:600}
+
+  /* ---------- Quick nav ---------- */
+  .quick-nav{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 48px}
+  .quick-nav a{font-family:var(--mono);font-size:12.5px;text-decoration:none;color:var(--text);background:var(--surface);border:1px solid var(--border);padding:5px 11px;border-radius:8px;transition:.15s}
+  .quick-nav a:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px);box-shadow:0 4px 12px rgba(227,76,38,.12)}
+
+  /* ---------- Section titles ---------- */
+  .section-title{font-size:13px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);font-weight:700;margin:8px 0 20px;display:flex;align-items:center;gap:12px}
+  .section-title::after{content:"";flex:1;height:1px;background:var(--border)}
+
+  /* ---------- Cards ---------- */
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:26px 28px;margin-bottom:22px;box-shadow:var(--shadow);scroll-margin-top:24px;transition:box-shadow .2s,border-color .2s}
+  .card:hover{box-shadow:0 2px 4px rgba(15,21,38,.05),0 16px 40px rgba(15,21,38,.08)}
+  .card-head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+  .tag-name{font-family:var(--mono);font-size:18px;font-weight:600;color:var(--accent);letter-spacing:-.01em}
+  .tag-name .p{color:#c0c6d6;font-weight:400}
+  .badges{display:flex;gap:6px;flex-wrap:wrap}
+  .badge{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:#eef1f8;color:#5a6684;border:1px solid #e2e6f0}
+  .badge.block{background:#eef4ff;color:#2563eb;border-color:#dbe6ff}
+  .badge.inline{background:#eefbf1;color:#1a8a4a;border-color:#d5f3e0}
+  .badge.void{background:#fff4ec;color:#c2410c;border-color:#ffe4d3}
+  .badge.meta{background:#f4eefe;color:#7c3aed;border-color:#e9defd}
+  .card>p{color:#3d465c;font-size:15px;margin-bottom:6px}
+  .card>p+p{margin-top:10px}
+
+  /* Inline tag mentions inside prose */
+  code.t{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--accent);padding:1px 6px;border-radius:5px;white-space:nowrap}
+
+  /* ---------- Callouts ---------- */
+  .callout{display:flex;gap:10px;padding:12px 16px;border-radius:10px;font-size:14px;margin:14px 0;border-left:4px solid;line-height:1.55}
+  .callout .ic{flex-shrink:0}
+  .callout.tip{background:#eefbf1;border-color:#34a853;color:#1b5e34}
+  .callout.warn{background:#fff4ec;border-color:#f06529;color:#8a3410}
+  .callout.a11y{background:#eaf4ff;border-color:#2563eb;color:#1e3a8a}
+
+  /* ---------- Usage chips ---------- */
+  .usage-label{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:16px 0 8px}
+  .usage{display:flex;flex-wrap:wrap;gap:7px;list-style:none}
+  .usage li{font-size:13px;background:#f2f4f9;border:1px solid #e8ebf2;color:#475069;padding:4px 11px;border-radius:8px}
+
+  /* ---------- Code blocks ---------- */
+  pre{position:relative;background:var(--code-bg);border-radius:12px;padding:18px 20px;overflow-x:auto;margin:16px 0;font-family:var(--mono);font-size:13.5px;line-height:1.7;color:var(--code-text);border:1px solid #222a40}
+  pre code{font-family:inherit;white-space:pre}
+  .tok-punct{color:#7d89ab}
+  .tok-tag{color:#ff7b72}
+  .tok-attr{color:#d2a8ff}
+  .tok-str{color:#a5d6ff}
+  .tok-comment{color:#8b949e;font-style:italic}
+  .tok-text{color:#dde3f2}
+  .tok-doctype{color:#79c0ff}
+  .copy-btn{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.08);color:#b9c2d8;border:1px solid rgba(255,255,255,.1);border-radius:7px;font-size:11.5px;font-weight:600;padding:4px 10px;cursor:pointer;opacity:0;transition:.15s;font-family:inherit}
+  pre:hover .copy-btn{opacity:1}
+  .copy-btn:hover{background:rgba(255,255,255,.16);color:#fff}
+
+  /* ---------- Resources ---------- */
+  .resources{margin-top:18px;padding-top:14px;border-top:1px dashed var(--border);font-size:13px;color:var(--muted);line-height:1.8}
+  .resources strong{color:var(--text);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-right:8px}
+  .resources a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent}
+  .resources a:hover{border-color:var(--accent)}
+  .resources .sep{color:#c3c9d8;margin:0 7px}
+
+  /* ---------- Footer ---------- */
+  .page-footer{margin-top:60px;padding-top:28px;border-top:1px solid var(--border);color:var(--muted);font-size:13.5px;text-align:center}
+
+  /* ---------- Mobile ---------- */
+  .menu-toggle{display:none;position:fixed;top:16px;left:16px;z-index:60;width:44px;height:44px;border-radius:12px;border:none;background:var(--sidebar-bg);color:#fff;font-size:20px;cursor:pointer;box-shadow:0 8px 24px rgba(15,21,38,.3)}
+  .overlay{display:none;position:fixed;inset:0;background:rgba(15,21,38,.5);z-index:40;backdrop-filter:blur(2px)}
+  .overlay.show{display:block}
+
+  @media(max-width:1080px){
+    main{margin-left:0;padding:84px 28px 100px;max-width:100%}
+    .sidebar{transform:translateX(-100%);transition:transform .28s cubic-bezier(.4,0,.2,1)}
+    .sidebar.open{transform:translateX(0)}
+    .menu-toggle{display:grid;place-items:center}
+  }
+  @media(max-width:640px){
+    main{padding:80px 16px 80px}
+    .card{padding:22px 18px}
+    .hero h1{font-size:30px}
+    .stats{gap:20px}
+    .tag-name{font-size:16px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== SIDEBAR ==================== -->
+<button class="menu-toggle" aria-label="Toggle navigation">☰</button>
+<div class="overlay" id="overlay"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="logo">&lt;/&gt;</div>
+    <div>
+      <h1>HTML Reference</h1>
+      <span>Elements &amp; Semantics</span>
+    </div>
+  </div>
+
+  <nav>
+    <div class="nav-group">
+      <h4>Foundation</h4>
+      <a href="#doctype">&lt;!DOCTYPE&gt;</a>
+      <a href="#html">&lt;html&gt;</a>
+      <a href="#head">&lt;head&gt;</a>
+      <a href="#charset">&lt;meta charset&gt;</a>
+      <a href="#viewport">&lt;meta viewport&gt;</a>
+      <a href="#title">&lt;title&gt;</a>
+      <a href="#description">&lt;meta description&gt;</a>
+      <a href="#favicons">Favicons</a>
+      <a href="#attributes">Attributes</a>
+      <a href="#data-attributes">data-* attributes</a>
+    </div>
+
+    <div class="nav-group">
+      <h4>Page Structure</h4>
+      <a href="#header">&lt;header&gt;</a>
+      <a href="#main">&lt;main&gt;</a>
+      <a href="#footer">&lt;footer&gt;</a>
+      <a href="#aside">&lt;aside&gt;</a>
+      <a href="#section">&lt;section&gt;</a>
+      <a href="#article">&lt;article&gt;</a>
+      <a href="#nav">&lt;nav&gt;</a>
+    </div>
+
+    <div class="nav-group">
+      <h4>Text &amp; Content</h4>
+      <a href="#headings">Headings h1–h6</a>
+      <a href="#p">&lt;p&gt;</a>
+      <a href="#span">&lt;span&gt;</a>
+      <a href="#div">&lt;div&gt;</a>
+      <a href="#comments">Comments</a>
+    </div>
+
+    <div class="nav-group">
+      <h4>Links &amp; Lists</h4>
+      <a href="#a">&lt;a&gt;</a>
+      <a href="#lists">Lists</a>
+      <a href="#hr">&lt;hr&gt;</a>
+      <a href="#br">&lt;br&gt;</a>
+    </div>
+
+    <div class="nav-group">
+      <h4>Quotations</h4>
+      <a href="#q">&lt;q&gt;</a>
+      <a href="#blockquote">&lt;blockquote&gt;</a>
+    </div>
+
+    <div class="nav-group">
+      <h4>Inline Semantics</h4>
+      <a href="#emphasis">Emphasis &amp; importance</a>
+      <a href="#edits">Edits &amp; highlights</a>
+      <a href="#technical">Technical &amp; metadata</a>
+    </div>
+
+    <div class="nav-group">
+      <h4>Data</h4>
+      <a href="#tables">Tables</a>
+    </div>
+
+    <div class="nav-group">
+      <h4>Media &amp; Interactive</h4>
+      <a href="#details">&lt;details&gt;</a>
+      <a href="#img">&lt;img&gt;</a>
+      <a href="#picture">&lt;picture&gt;</a>
+      <a href="#video">&lt;video&gt;</a>
+      <a href="#audio">&lt;audio&gt;</a>
+      <a href="#iframe">&lt;iframe&gt;</a>
+    </div>
+  </nav>
+</aside>
+
+<!-- ==================== MAIN ==================== -->
+<main>
+
+  <!-- Hero -->
+  <header class="hero">
+    <span class="eyebrow">Reference</span>
+    <h1>HTML Elements <span class="grad">Reference</span></h1>
+    <p>HTML is about content. CSS is about the look and feel. A complete, beautifully organized cheat sheet of every element — from <code class="t">&lt;!DOCTYPE&gt;</code> to <code class="t">&lt;iframe&gt;</code>.</p>
+    <div class="stats">
+      <div class="stat"><strong>38</strong><span>Topic cards</span></div>
+      <div class="stat"><strong>60+</strong><span>Elements covered</span></div>
+      <div class="stat"><strong>8</strong><span>Categories</span></div>
+    </div>
+  </header>
+
+  <!-- Quick nav (populated by JS) -->
+  <div class="quick-nav" id="quick-nav" aria-label="Quick navigation"></div>
+
+  <!-- ============================================================
+       FOUNDATION
+  ============================================================ -->
+  <h2 class="section-title">Foundation</h2>
+
+  <article class="card" id="doctype">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;!DOCTYPE html&gt;</h3>
+      <div class="badges"><span class="badge meta">Declaration</span></div>
+    </div>
+    <p>The doctype is necessary at the top of every HTML page to force the browser to render the page according to the relevant specifications. It is the only element living outside the <code class="t">&lt;html&gt;</code> tag.</p>
+    <pre><code>&lt;!DOCTYPE html&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Glossary/Doctype" target="_blank" rel="noopener">Doctype — MDN</a></div>
+  </article>
+
+  <article class="card" id="html">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;html&gt;</h3>
+      <div class="badges"><span class="badge meta">Root</span></div>
+    </div>
+    <p>The <code class="t">&lt;html&gt;</code> tag tells the browser that the document is an HTML webpage. It is used as a container for all the HTML elements. The doctype is the only thing living outside of it.</p>
+    <pre><code>&lt;html lang="en" dir="ltr"&gt;
+  &lt;head&gt;...&lt;/head&gt;
+  &lt;body&gt;...&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    <div class="callout tip"><span class="ic">💡</span><span><strong>Language &amp; reading direction:</strong> always set <code class="t">lang</code> and, when relevant, <code class="t">dir="rtl"</code> to build RTL-aware web apps and websites.</span></div>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/html" target="_blank" rel="noopener">MDN</a><span class="sep">·</span><span>Building RTL-Aware Web Apps &amp; Websites</span></div>
+  </article>
+
+  <article class="card" id="head">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;head&gt;</h3>
+      <div class="badges"><span class="badge meta">Metadata</span></div>
+    </div>
+    <p>The <code class="t">&lt;head&gt;</code> element contains all the metadata related to your page. Everything inside it is <em>not</em> visible in the browser window.</p>
+    <div class="usage-label">Common contents</div>
+    <ul class="usage">
+      <li>Title of the page</li>
+      <li>Asynchronous script calls</li>
+      <li>Metadata</li>
+      <li>Critical CSS embed</li>
+      <li>JavaScript embed</li>
+    </ul>
+    <pre><code>&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Page title&lt;/title&gt;
+  &lt;link rel="stylesheet" href="styles.css"&gt;
+  &lt;script src="app.js" async&gt;&lt;/script&gt;
+&lt;/head&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><span>HEAD — A free guide to head elements</span></div>
+  </article>
+
+  <article class="card" id="charset">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;meta charset&gt;</h3>
+      <div class="badges"><span class="badge meta">Metadata</span></div>
+    </div>
+    <p>The meta charset declares the page’s character encoding. It should appear as the very first element inside <code class="t">&lt;head&gt;</code>.</p>
+    <pre><code>&lt;meta charset="UTF-8"&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta" target="_blank" rel="noopener">meta — MDN</a><span class="sep">·</span><span>Declaring character encodings in HTML</span></div>
+  </article>
+
+  <article class="card" id="viewport">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;meta viewport&gt;</h3>
+      <div class="badges"><span class="badge meta">Metadata</span></div>
+    </div>
+    <p>The meta viewport gives information about the initial size of the viewport. It is used by mobile devices only.</p>
+    <pre><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></pre>
+    <div class="callout a11y"><span class="ic">♿</span><span><strong>Accessibility tip:</strong> never use <code class="t">maximum-scale=1.0</code>. It prevents the user from zooming in and causes an accessibility issue.</span></div>
+    <div class="resources"><strong>Resources</strong><span>Responsive Design With Viewport Control</span></div>
+  </article>
+
+  <article class="card" id="title">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;title&gt;</h3>
+      <div class="badges"><span class="badge meta">Metadata</span></div>
+    </div>
+    <p>The title element defines the title of the web page. It is only visible on the tab/window of your browser.</p>
+    <pre><code>&lt;title&gt;Page title&lt;/title&gt;</code></pre>
+    <div class="callout warn"><span class="ic">⚠️</span><span><strong>Warning!</strong> The title should always have fewer than 56 characters.</span></div>
+    <div class="resources"><strong>Resources</strong><span>The ideal width of the SEO title — Yoast</span></div>
+  </article>
+
+  <article class="card" id="description">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;meta name="description"&gt;</h3>
+      <div class="badges"><span class="badge meta">Metadata</span></div>
+    </div>
+    <p>The meta description provides a short summary of the page that search engines may display in results.</p>
+    <pre><code>&lt;meta name="description" content="A short summary of the page for search engines."&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><span>The ideal length of a meta description — Yoast</span></div>
+  </article>
+
+  <article class="card" id="favicons">
+    <div class="card-head">
+      <h3 class="tag-name">Favicons</h3>
+      <div class="badges"><span class="badge meta">Metadata</span></div>
+    </div>
+    <p>Favicons are the small icons shown in browser tabs, bookmarks, and on mobile home screens. Provide multiple formats for broad platform support.</p>
+    <pre><code>&lt;link rel="icon" href="/favicon.ico" sizes="any"&gt;
+&lt;link rel="icon" href="/favicon.svg" type="image/svg+xml"&gt;
+&lt;link rel="apple-touch-icon" href="/apple-touch-icon.png"&gt;
+&lt;link rel="manifest" href="/site.webmanifest"&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><span>Favicon &amp; App Icon Generator</span><span class="sep">·</span><span>Obsessive cheat sheet to favicon sizes/types</span><span class="sep">·</span><span>PNG favicons — caniuse</span></div>
+  </article>
+
+  <article class="card" id="attributes">
+    <div class="card-head">
+      <h3 class="tag-name">Tag attributes</h3>
+      <div class="badges"><span class="badge">Syntax</span></div>
+    </div>
+    <p>Attributes provide additional information or instructions for an HTML element. They are always included inside the opening tag.</p>
+    <pre><code>&lt;a href="https://example.com" target="_blank" rel="noopener"&gt;Link&lt;/a&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes" target="_blank" rel="noopener">HTML attribute reference — MDN</a></div>
+  </article>
+
+  <article class="card" id="data-attributes">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;div data-*&gt;</h3>
+      <div class="badges"><span class="badge">Custom data</span></div>
+    </div>
+    <p>It is possible to declare any custom attribute using the <code class="t">data-</code> prefix. These attributes store extra information on the element without any visual effect.</p>
+    <pre><code>&lt;div data-user-id="42" data-role="admin"&gt;
+  Some content
+&lt;/div&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*" target="_blank" rel="noopener">data-* — MDN</a></div>
+  </article>
+
+  <!-- ============================================================
+       PAGE STRUCTURE
+  ============================================================ -->
+  <h2 class="section-title">Page Structure</h2>
+
+  <article class="card" id="header">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;header&gt;</h3>
+      <div class="badges"><span class="badge block">Block</span></div>
+    </div>
+    <p>The <code class="t">&lt;header&gt;</code> element identifies the top of a webpage, article, section, or other segment of a page. The header is normally the same across all pages of your website.</p>
+    <div class="usage-label">Common usage</div>
+    <ul class="usage"><li>Logo of the website</li><li>Navigation</li><li>Search form</li></ul>
+    <pre><code>&lt;header&gt;
+  &lt;a href="/"&gt;&lt;img src="logo.svg" alt="My Website"&gt;&lt;/a&gt;
+  &lt;nav&gt;...&lt;/nav&gt;
+&lt;/header&gt;</code></pre>
+    <div class="callout warn"><span class="ic">⚠️</span><span><strong>Don’t confuse</strong> <code class="t">&lt;header&gt;</code> with the <code class="t">&lt;head&gt;</code> element of the page.</span></div>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/header" target="_blank" rel="noopener">header — MDN</a></div>
+  </article>
+
+  <article class="card" id="main">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;main&gt;</h3>
+      <div class="badges"><span class="badge block">Block</span></div>
+    </div>
+    <p>The <code class="t">&lt;main&gt;</code> element is a structural element located generally between the <code class="t">&lt;header&gt;</code> and the <code class="t">&lt;footer&gt;</code>. It contains the primary content of your web page.</p>
+    <pre><code>&lt;header&gt;This is my header&lt;/header&gt;
+&lt;main&gt;
+  &lt;h1&gt;Welcome&lt;/h1&gt;
+  &lt;p&gt;This is where I put my content.&lt;/p&gt;
+&lt;/main&gt;
+&lt;footer&gt;This is the footer&lt;/footer&gt;</code></pre>
+    <div class="callout warn"><span class="ic">⚠️</span><span><strong>Warning!</strong> The <code class="t">&lt;main&gt;</code> element should never be a descendant of an <code class="t">&lt;article&gt;</code>, <code class="t">&lt;aside&gt;</code>, <code class="t">&lt;header&gt;</code>, <code class="t">&lt;footer&gt;</code>, or <code class="t">&lt;nav&gt;</code> element.</span></div>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/main" target="_blank" rel="noopener">main — MDN</a></div>
+  </article>
+
+  <article class="card" id="footer">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;footer&gt;</h3>
+      <div class="badges"><span class="badge block">Block</span></div>
+    </div>
+    <p>The <code class="t">&lt;footer&gt;</code> element is a structural element used to identify the footer of a page, article, or section.</p>
+    <div class="usage-label">Common usage</div>
+    <ul class="usage"><li>Copyright information</li><li>Authorship information</li><li>Navigation elements</li><li>Social icons or links</li></ul>
+    <pre><code>&lt;footer&gt;
+  &lt;p&gt;&amp;copy; 2024 My Website — All rights reserved.&lt;/p&gt;
+&lt;/footer&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/footer" target="_blank" rel="noopener">footer — MDN</a></div>
+  </article>
+
+  <article class="card" id="aside">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;aside&gt;</h3>
+      <div class="badges"><span class="badge block">Block</span></div>
+    </div>
+    <p>The <code class="t">&lt;aside&gt;</code> element contains additional information related to the main content.</p>
+    <div class="usage-label">Common usage</div>
+    <ul class="usage"><li>Monthly archives</li><li>List of categories</li></ul>
+    <pre><code>&lt;aside&gt;
+  &lt;h3&gt;Categories&lt;/h3&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="/html"&gt;HTML&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/css"&gt;CSS&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/aside&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/aside" target="_blank" rel="noopener">aside — MDN</a></div>
+  </article>
+
+  <article class="card" id="section">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;section&gt;</h3>
+      <div class="badges"><span class="badge block">Block</span></div>
+    </div>
+    <p>The <code class="t">&lt;section&gt;</code> element allows the grouping of related elements. You can usually find a <code class="t">&lt;header&gt;</code> and <code class="t">&lt;footer&gt;</code> attached to a section.</p>
+    <pre><code>&lt;section&gt;
+  &lt;h2&gt;Section 1&lt;/h2&gt;
+  &lt;p&gt;Related content goes here.&lt;/p&gt;
+&lt;/section&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/section" target="_blank" rel="noopener">section — MDN</a></div>
+  </article>
+
+  <article class="card" id="article">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;article&gt;</h3>
+      <div class="badges"><span class="badge block">Block</span></div>
+    </div>
+    <p>An <code class="t">&lt;article&gt;</code> represents a self-contained piece of content which could theoretically be distributed to other websites and platforms as a stand-alone unit.</p>
+    <div class="usage-label">Common usage</div>
+    <ul class="usage"><li>Blog posts</li><li>News articles</li><li>Product cards</li><li>Forum posts</li></ul>
+    <pre><code>&lt;article&gt;
+  &lt;h2&gt;Article 1&lt;/h2&gt;
+  &lt;p&gt;Article content...&lt;/p&gt;
+&lt;/article&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article" target="_blank" rel="noopener">article — MDN</a></div>
+  </article>
+
+  <article class="card" id="nav">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;nav&gt;</h3>
+      <div class="badges"><span class="badge block">Block</span></div>
+    </div>
+    <p>The <code class="t">&lt;nav&gt;</code> element is a structural element containing navigation links.</p>
+    <pre><code>&lt;nav&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/about"&gt;About&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/contact"&gt;Contact&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/nav" target="_blank" rel="noopener">nav — MDN</a></div>
+  </article>
+
+  <!-- ============================================================
+       TEXT & CONTENT
+  ============================================================ -->
+  <h2 class="section-title">Text &amp; Content</h2>
+
+  <article class="card" id="headings">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;h1&gt; – &lt;h6&gt;</h3>
+      <div class="badges"><span class="badge block">Block</span></div>
+    </div>
+    <p>Headings are used to define a section heading. Browsers apply different default sizes for each level, but HTML is about content — not styling.</p>
+    <pre><code>&lt;h1&gt;This is my title level 1&lt;/h1&gt;
+&lt;h2&gt;This is my title level 2&lt;/h2&gt;
+&lt;h3&gt;This is my title level 3&lt;/h3&gt;</code></pre>
+    <div class="callout warn"><span class="ic">⚠️</span><span><strong>Warning!</strong> Never use an <code class="t">&lt;h4&gt;</code> after an <code class="t">&lt;h2&gt;</code>. Always keep a descendant order: <code class="t">h1 &gt; h2 &gt; h3 …</code></span></div>
+    <div class="callout a11y"><span class="ic">♿</span><span><strong>Accessibility tip:</strong> headings are used by voice browsers to help navigate through the webpage.</span></div>
+    <div class="callout tip"><span class="ic">💡</span><span>Never put the logo or name of your website inside an <code class="t">&lt;h1&gt;</code>. The text inside must reflect the content of your page. On a homepage you can visually hide your <code class="t">&lt;h1&gt;</code>, but it should still exist in the code.</span></div>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements" target="_blank" rel="noopener">h1–h6 — MDN</a></div>
+  </article>
+
+  <article class="card" id="p">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;p&gt;</h3>
+      <div class="badges"><span class="badge block">Block</span></div>
+    </div>
+    <p>A <code class="t">&lt;p&gt;</code> defines a paragraph of text.</p>
+    <pre><code>&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&lt;/p&gt;</code></pre>
+    <div class="callout warn"><span class="ic">⚠️</span><span><strong>Warning!</strong> If you need a container to wrap multiple elements, use <code class="t">&lt;div&gt;</code> instead of <code class="t">&lt;p&gt;</code>. Only use the paragraph tag when the content could be considered a paragraph of text.</span></div>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/p" target="_blank" rel="noopener">p — MDN</a></div>
+  </article>
+
+  <article class="card" id="span">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;span&gt;</h3>
+      <div class="badges"><span class="badge inline">Inline</span></div>
+    </div>
+    <p>A <code class="t">&lt;span&gt;</code> is a generic inline container used usually for text that is not inside a paragraph. It has no semantic meaning and should be used as little as possible.</p>
+    <pre><code>&lt;p&gt;This is &lt;span class="highlight"&gt;my first span&lt;/span&gt;.&lt;/p&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/span" target="_blank" rel="noopener">span — MDN</a></div>
+  </article>
+
+  <article class="card" id="div">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;div&gt;</h3>
+      <div class="badges"><span class="badge block">Block</span></div>
+    </div>
+    <p>A <code class="t">&lt;div&gt;</code> (stands for “document division”) is a generic block of content used to structure elements in your layout. Like <code class="t">&lt;span&gt;</code>, it carries no semantic meaning.</p>
+    <pre><code>&lt;div class="card"&gt;
+  &lt;p&gt;This is my first div.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div" target="_blank" rel="noopener">div — MDN</a></div>
+  </article>
+
+  <article class="card" id="comments">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;!-- --&gt;</h3>
+      <div class="badges"><span class="badge">Comment</span></div>
+    </div>
+    <p>Comments allow you to add information visible to the developer but not to the normal user. Comments are not rendered on the page.</p>
+    <pre><code>&lt;!-- This is a comment. It is not visible on the page. --&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><span>About conditional comments (Internet Explorer) — Microsoft Docs</span></div>
+  </article>
+
+  <!-- ============================================================
+       LINKS & LISTS
+  ============================================================ -->
+  <h2 class="section-title">Links &amp; Lists</h2>
+
+  <article class="card" id="a">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;a&gt;</h3>
+      <div class="badges"><span class="badge inline">Inline</span></div>
+    </div>
+    <p>Links are inline elements which allow you to navigate from one page or document to another.</p>
+    <div class="usage-label">Three types of targets</div>
+    <ul class="usage">
+      <li>Anchor targets — navigate within the same page</li>
+      <li>Relative URLs — navigate within the same website</li>
+      <li>Absolute URLs — navigate to another website</li>
+    </ul>
+    <pre><code>&lt;a href="#section"&gt;Anchor link&lt;/a&gt;
+&lt;a href="/about"&gt;Relative URL&lt;/a&gt;
+&lt;a href="https://example.com" target="_blank" rel="noopener"&gt;Absolute URL&lt;/a&gt;</code></pre>
+    <div class="callout warn"><span class="ic">⚠️</span><span>If you use <code class="t">target="_blank"</code>, don’t forget to add <code class="t">rel="noopener"</code> for security purposes.</span></div>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a" target="_blank" rel="noopener">a — MDN</a><span class="sep">·</span><span>About rel=noopener</span><span class="sep">·</span><span>Mailto Links — CSS-Tricks</span></div>
+  </article>
+
+  <article class="card" id="lists">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;ol&gt; · &lt;ul&gt; · &lt;dl&gt;</h3>
+      <div class="badges"><span class="badge block">Block</span></div>
+    </div>
+    <p>Lists are used for listing ingredients in a recipe, a series of social icons, and more. Use <code class="t">&lt;ol&gt;</code> for ordered lists, <code class="t">&lt;ul&gt;</code> for unordered lists, and <code class="t">&lt;dl&gt;</code> for definition lists.</p>
+    <pre><code>&lt;ol&gt;
+  &lt;li&gt;List item 1&lt;/li&gt;
+  &lt;li&gt;List item 2&lt;/li&gt;
+  &lt;li&gt;List item 3&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;First bullet point&lt;/li&gt;
+  &lt;li&gt;Second bullet point&lt;/li&gt;
+  &lt;li&gt;Third bullet point&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;dl&gt;
+  &lt;dt&gt;Term&lt;/dt&gt;
+  &lt;dd&gt;Definition of the term&lt;/dd&gt;
+  &lt;dt&gt;Another term&lt;/dt&gt;
+  &lt;dd&gt;Another definition of the term&lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ul" target="_blank" rel="noopener">ul — MDN</a><span class="sep">·</span><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ol" target="_blank" rel="noopener">ol — MDN</a><span class="sep">·</span><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dl" target="_blank" rel="noopener">dl — MDN</a></div>
+  </article>
+
+  <article class="card" id="hr">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;hr&gt;</h3>
+      <div class="badges"><span class="badge void">Void</span></div>
+    </div>
+    <p>An <code class="t">&lt;hr&gt;</code> is a semantic break that separates different blocks of text.</p>
+    <pre><code>&lt;p&gt;Lorem ipsum dolor sit amet.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Section two begins here.&lt;/p&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hr" target="_blank" rel="noopener">hr — MDN</a></div>
+  </article>
+
+  <article class="card" id="br">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;br&gt;</h3>
+      <div class="badges"><span class="badge void">Void</span></div>
+    </div>
+    <p>Line breaks are used to break text onto multiple lines.</p>
+    <pre><code>&lt;p&gt;Lorem ipsum dolor sit amet.&lt;br&gt;Donec viverra nec nulla vitae mollis.&lt;/p&gt;</code></pre>
+    <div class="callout warn"><span class="ic">⚠️</span><span>Never use line breaks for presentation purposes — to create space between elements. Spacing and layout should only be handled by CSS.</span></div>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/br" target="_blank" rel="noopener">br — MDN</a></div>
+  </article>
+
+  <!-- ============================================================
+       QUOTATIONS
+  ============================================================ -->
+  <h2 class="section-title">Quotations</h2>
+
+  <article class="card" id="q">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;q&gt;</h3>
+      <div class="badges"><span class="badge inline">Inline</span></div>
+    </div>
+    <p>Inline quotes are used for inline text that doesn’t require paragraph breaks.</p>
+    <pre><code>&lt;p&gt;According to Mozilla's website, &lt;q&gt;Firefox 1.0 was released in 2004 and became a big success.&lt;/q&gt;&lt;/p&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/q" target="_blank" rel="noopener">q — MDN</a></div>
+  </article>
+
+  <article class="card" id="blockquote">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;blockquote&gt;</h3>
+      <div class="badges"><span class="badge block">Block</span></div>
+    </div>
+    <p>A multiline quote is called a blockquote.</p>
+    <pre><code>&lt;blockquote cite="https://example.com"&gt;
+  &lt;p&gt;People think focus means saying yes to the thing you've got to focus on.
+  But that's not what it means at all. It means saying no to the hundred other
+  good ideas that there are.&lt;/p&gt;
+  &lt;footer&gt;— Steve Jobs, Apple Worldwide Developers’ Conference, 1997&lt;/footer&gt;
+&lt;/blockquote&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/blockquote" target="_blank" rel="noopener">blockquote — MDN</a></div>
+  </article>
+
+  <!-- ============================================================
+       INLINE SEMANTICS
+  ============================================================ -->
+  <h2 class="section-title">Inline Semantics</h2>
+
+  <article class="card" id="emphasis">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;em&gt; · &lt;i&gt; · &lt;strong&gt; · &lt;b&gt;</h3>
+      <div class="badges"><span class="badge inline">Inline</span></div>
+    </div>
+    <p>These tags give semantic meaning to text. They may look the same visually in some browsers, but HTML is about content and semantics, not the visual aspect.</p>
+    <div class="usage-label">Meaning</div>
+    <ul class="usage">
+      <li><code class="t">&lt;em&gt;</code> — stress emphasis</li>
+      <li><code class="t">&lt;i&gt;</code> — text set off from the normal prose (foreign word, technical term…)</li>
+      <li><code class="t">&lt;strong&gt;</code> — stronger importance</li>
+      <li><code class="t">&lt;b&gt;</code> — draw attention (keywords in a summary, product names…)</li>
+    </ul>
+    <pre><code>&lt;p&gt;I &lt;em&gt;really&lt;/em&gt; like driving in San Francisco.&lt;/p&gt;
+&lt;p&gt;The term &lt;i&gt;voilier&lt;/i&gt; is a french word which means "sailing ship".&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Warning!&lt;/strong&gt; This is not a drill.&lt;/p&gt;
+&lt;p&gt;This text is &lt;b&gt;bold&lt;/b&gt;.&lt;/p&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/em" target="_blank" rel="noopener">em</a><span class="sep">·</span><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/i" target="_blank" rel="noopener">i</a><span class="sep">·</span><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/strong" target="_blank" rel="noopener">strong</a><span class="sep">·</span><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/b" target="_blank" rel="noopener">b</a></div>
+  </article>
+
+  <article class="card" id="edits">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;small&gt; · &lt;del&gt; · &lt;ins&gt; · &lt;s&gt; · &lt;mark&gt;</h3>
+      <div class="badges"><span class="badge inline">Inline</span></div>
+    </div>
+    <p>These tags annotate edits, comments, and highlighted text.</p>
+    <div class="usage-label">Meaning</div>
+    <ul class="usage">
+      <li><code class="t">&lt;small&gt;</code> — side-comments or small text (copyright, legal…)</li>
+      <li><code class="t">&lt;del&gt;</code> — deleted text</li>
+      <li><code class="t">&lt;ins&gt;</code> — inserted text</li>
+      <li><code class="t">&lt;s&gt;</code> — text with a strikethrough</li>
+      <li><code class="t">&lt;mark&gt;</code> — relevance / highlighted text</li>
+    </ul>
+    <pre><code>&lt;p&gt;&lt;small&gt;&amp;copy; 2024 My Website. All rights reserved.&lt;/small&gt;&lt;/p&gt;
+&lt;p&gt;I received &lt;del&gt;$500&lt;/del&gt; &lt;ins&gt;$1000&lt;/ins&gt; for that job!&lt;/p&gt;
+&lt;p&gt;&lt;s&gt;$500&lt;/s&gt; $1000&lt;/p&gt;
+&lt;p&gt;This whole text should be &lt;mark&gt;highlighted in yellow&lt;/mark&gt;.&lt;/p&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/small" target="_blank" rel="noopener">small</a><span class="sep">·</span><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/del" target="_blank" rel="noopener">del</a><span class="sep">·</span><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ins" target="_blank" rel="noopener">ins</a><span class="sep">·</span><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/s" target="_blank" rel="noopener">s</a><span class="sep">·</span><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/mark" target="_blank" rel="noopener">mark</a></div>
+  </article>
+
+  <article class="card" id="technical">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;cite&gt; · &lt;dfn&gt; · &lt;abbr&gt; · &lt;code&gt; · &lt;time&gt; · &lt;wbr&gt; · &lt;address&gt;</h3>
+      <div class="badges"><span class="badge inline">Inline</span></div>
+    </div>
+    <p>These tags give precise semantic meaning to technical, metadata, and contact information.</p>
+    <div class="usage-label">Meaning</div>
+    <ul class="usage">
+      <li><code class="t">&lt;cite&gt;</code> — name of a work (book, play, song…)</li>
+      <li><code class="t">&lt;dfn&gt;</code> — defining instance of a term</li>
+      <li><code class="t">&lt;abbr&gt;</code> — abbreviation or acronym</li>
+      <li><code class="t">&lt;code&gt;</code> — short fragment of computer code</li>
+      <li><code class="t">&lt;time&gt;</code> — specific period in time</li>
+      <li><code class="t">&lt;wbr&gt;</code> — opportunity for a line break</li>
+      <li><code class="t">&lt;address&gt;</code> — contact information</li>
+    </ul>
+    <pre><code>&lt;p&gt;&lt;cite&gt;Atomic Habits&lt;/cite&gt; by James Clear&lt;/p&gt;
+&lt;p&gt;The &lt;dfn&gt;HTML Definition element&lt;/dfn&gt; is used to indicate a term being defined.&lt;/p&gt;
+&lt;p&gt;You are the &lt;abbr title="Cascading Style Sheets"&gt;CSS&lt;/abbr&gt; of my HTML.&lt;/p&gt;
+&lt;p&gt;Use &lt;code&gt;console.log()&lt;/code&gt; to debug.&lt;/p&gt;
+&lt;p&gt;Published on &lt;time datetime="2019-09-19"&gt;Sept 19, 2019&lt;/time&gt;&lt;/p&gt;
+&lt;p&gt;I want to understand what&lt;wbr&gt;is&lt;wbr&gt;going&lt;wbr&gt;on!&lt;/p&gt;
+&lt;address&gt;
+  Contact &lt;a href="mailto:someone@example.com"&gt;someone@example.com&lt;/a&gt;
+&lt;/address&gt;</code></pre>
+    <div class="resources"><strong>Resources</strong><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/cite" target="_blank" rel="noopener">cite</a><span class="sep">·</span><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dfn" target="_blank" rel="noopener">dfn</a><span class="sep">·</span><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/abbr" target="_blank" rel="noopener">abbr</a><span class="sep">·</span><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/code" target="_blank" rel="noopener">code</a><span class="sep">·</span><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time" target="_blank" rel="noopener">time</a><span class="sep">·</span><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/wbr" target="_blank" rel="noopener">wbr</a><span class="sep">·</span><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/address" target="_blank" rel="noopener">address</a></div>
+  </article>
+
+  <!-- ============================================================
+       TABLES
+  ============================================================ -->
+  <h2 class="section-title">Data</h2>
+
+  <article class="card" id="tables">
+    <div class="card-head">
+      <h3 class="tag-name">&lt;table&gt;</h3>
+      <div class="badges"><span class="badge block">Block</span></div>
+    </div>
+    <p>A table element is used to wrap tabular content. It uses rows and columns to organize the data.</p>
+    <div class="usage-label">Anatomy of a table</div>
+    <ul class="usage">
+      <li><code class="t">&lt;caption&gt;</code> — title of the table</li>
+      <li><code class="t">&lt;thead&gt;</code> — header rows</li>
+      <li><code class="t">&lt;tbody&gt;</code> — body rows</li>
+      <li><code class="t">&lt;tfoot&gt;</code> — footer rows</li>
+      <li><code class="t">&lt;th&gt;</code> — header cell</li>
+      <li><code class="t">&lt;tr&gt;</code> — row of cells</li>
+      <li><code class="t">&lt;td&gt;</code> — data
