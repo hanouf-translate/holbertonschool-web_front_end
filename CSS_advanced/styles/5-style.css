@@ -1,7 +1,6 @@
+/* 5. Variables for the font size */
 
-/*root */
-
-:root{
+:root {
   --color-primary: #d73953;
   --color-black: #090909;
   --color-white: #ffffff;
@@ -17,8 +16,8 @@
   --font-size-xx-large: 4.8rem;
 }
 
-html{
-    font-size: 62.5%;
+html {
+  font-size: 62.5%;
 }
 
 body {
